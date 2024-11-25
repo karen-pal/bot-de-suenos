@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, interactive-widget=resizes-content, initial-scale=1" />
+    <title>Botu</title>
+    <link rel="stylesheet" href="estilos.css" />
+    <script type="module">
+        const main = document.querySelector("main");
+        const input = document.querySelector("input");
+        const prompt = main.querySelector(".prompt");
+        const apiUrl = "https://dba9-181-110-94-211.ngrok-free.app/generate/"; // URL de tu API
+
+        main.addEventListener("click", () => {
+            input.focus();
+        });
+
+        input.addEventListener("input", () => {
+            prompt.textContent = input.value;
+        });
+
+        input.addEventListener("keypress", async event => {
+            if (event.key !== "Enter") return;
+
+            const userInput = input.value.trim();
+            if (!userInput) return;
+
+            hacerQueSeVaya(prompt);
+
+            // Limpia el campo de entrada
+            input.value = "";
+            prompt.textContent = "";
+
+            // Realiza la solicitud POST
+            try {
+                const response = await fetch(apiUrl, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({
+                        instruction: "¿Qué significa soñar con algo?",
+                        user_input: userInput,
+                    }),
+                });
+
+                if (!response.ok) {
+                    throw new Error("Error en la respuesta del servidor");
+                }
+
+                const data = await response.json();
+                mostrarRespuesta(data.response);
+            } catch (error) {
+                console.error("Error al realizar la solicitud:", error);
+                mostrarRespuesta("Hubo un problema al procesar tu solicitud. Inténtalo de nuevo.");
+            }
+        });
+
+        function hacerQueSeVaya(elemento) {
+            const exElemento = elemento.cloneNode(true);
+            copiarUbicacion(elemento, exElemento);
+            exElemento.classList.remove("activo");
+            exElemento.classList.add("yendose");
+            exElemento.addEventListener("animationend", () => exElemento.remove());
+
+            document.body.append(exElemento);
+        }
+
+        function copiarUbicacion(elementoDesde, elementoHasta) {
+            const ubicacionACopiar = elementoDesde.getBoundingClientRect();
+
+            Object.assign(elementoHasta.style, {
+                position: "fixed",
+                width: `${ubicacionACopiar.width}px`,
+                height: `${ubicacionACopiar.height}px`,
+                top: `${ubicacionACopiar.top}px`,
+                left: `${ubicacionACopiar.left}px`,
+            });
+        }
+
+        function mostrarRespuesta(respuesta) {
+            const respuestaElemento = document.createElement("div");
+            respuestaElemento.classList.add("respuesta");
+            respuestaElemento.textContent = respuesta;
+
+            document.body.appendChild(respuestaElemento);
+
+            setTimeout(() => {
+                respuestaElemento.classList.add("desvanecer");
+                respuestaElemento.addEventListener("animationend", () => respuestaElemento.remove());
+            }, 5000);
+        }
+    </script>
+</head>
+<body>
+<header>
+    Teclea tu consulta
+</header>
+<main>
+    <div class="prompt activo"></div>
+</main>
+<footer>
+    <img src="logo.png" alt="Logo de Botu" />
+</footer>
+<input type="text" placeholder="Escribe tu pregunta y presiona Enter" />
+</body>
+</html>
+

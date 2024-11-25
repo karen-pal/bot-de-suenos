@@ -1,0 +1,91 @@
+body {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    margin: 0;
+    padding: 1em;
+    box-sizing: border-box;
+    color: white;
+    background: black url("fondo.png") no-repeat center;
+    align-items: stretch;
+    overflow-x: hidden;
+    font-family: serif;
+}
+
+header {
+    padding: 1em;
+    font-size: 40px;
+    text-align: center;
+}
+
+main {
+    flex-grow: 1;
+    cursor: text;
+    display: flex;
+    justify-content: center;
+}
+
+input {
+    width: 1px;
+    height: 0;
+    border: 0;
+    margin: 0;
+    padding: 0;
+    background: transparent;
+    color: transparent;
+}
+
+.prompt {
+    background: black;
+    padding: 1em;
+    font-size: 80px;
+    filter: blur(1px);
+    word-break: break-word;
+    max-width: 1000px;
+    box-sizing: border-box;
+    align-self: flex-start;
+}
+
+.prompt.activo::after {
+    content: ' ';
+    background: white;
+    display: inline-block;
+    height: 90px;
+    width: .5em;
+    vertical-align: sub;
+    animation: titilar .5s linear 0s infinite alternate;
+}
+
+.prompt.yendose {
+    position: absolute;
+    top: 0;
+    left: 0;
+    background: transparent;
+    animation: 1s irse ease-in forwards 1;
+}
+
+@keyframes titilar {
+    0% { background: transparent; }
+    49% { background: transparent; }
+    50% { background: white; }
+    100% { background: white; }
+}
+
+@keyframes irse {
+    100% {
+        opacity: 0;
+        transform: translateY(100%);
+    }
+}
+
+footer {
+    text-align: center;
+}
+
+button {
+    background: red;
+}
+
+footer img {
+    width: 200px;
+}
