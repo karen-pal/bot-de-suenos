@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Imagen Fullscreen</title>
+    <title>botu response</title>
     <style>
         body {
             margin: 0;
@@ -20,13 +20,27 @@
     </style>
 </head>
 <body>
-    <img id="imagen" src="https://1b6f-181-14-214-43.ngrok-free.app/respuesta.png" alt="Imagen dinámica">
+    <img id="imagen" alt="Imagen dinámica">
     <script>
-        // Actualización automática para evitar caché
-        setInterval(() => {
-            const imagen = document.getElementById('imagen');
-            imagen.src = `https://1b6f-181-14-214-43.ngrok-free.app/respuesta.png?timestamp=${new Date().getTime()}`;
-        }, 5000);
+        const actualizarImagen = async () => {
+            try {
+                const respuesta = await fetch('https://c958-181-14-214-43.ngrok-free.app/respuesta.png', {
+                    headers: { 'ngrok-skip-browser-warning': 'true' }
+                });
+                if (!respuesta.ok) throw new Error('Error al cargar la imagen');
+                const blob = await respuesta.blob();
+                const imagen = document.getElementById('imagen');
+                imagen.src = URL.createObjectURL(blob);
+            } catch (error) {
+                console.error('Error al cargar la imagen:', error);
+            }
+        };
+
+        // Cargar imagen inicial
+        actualizarImagen();
+
+        // Actualización automática cada 5 segundos
+        setInterval(actualizarImagen, 5000);
     </script>
 </body>
 </html>

@@ -9,7 +9,7 @@
         const main = document.querySelector("main");
         const input = document.querySelector("input");
         const prompt = main.querySelector(".prompt");
-        const apiUrl = "https://1b6f-181-14-214-43.ngrok-free.app/generate/"; // URL de tu API
+        const apiUrl = "https://c958-181-14-214-43.ngrok-free.app/generate/"; // URL de tu API
 
         main.addEventListener("click", () => {
             input.focus();
@@ -52,7 +52,7 @@
                 mostrarRespuesta(data.response);
             } catch (error) {
                 console.error("Error al realizar la solicitud:", error);
-                mostrarRespuesta("ZZzzzzzzzzzzzzzzzz");
+                mostrarRespuesta("Hubo un problema al procesar tu solicitud. Inténtalo de nuevo.");
             }
         });
 
