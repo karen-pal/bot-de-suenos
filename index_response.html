@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Imagen Fullscreen</title>
+    <style>
+        body {
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: black;
+        }
+        img {
+            max-width: 100%;
+            max-height: 100%;
+        }
+    </style>
+</head>
+<body>
+    <img id="imagen" src="https://9d29-181-14-214-43.ngrok-free.app/respuesta.png" alt="Imagen dinámica">
+    <script>
+        // Actualización automática para evitar caché
+        setInterval(() => {
+            const imagen = document.getElementById('imagen');
+            imagen.src = `https://9d29-181-14-214-43.ngrok-free.app/respuesta.png?timestamp=${new Date().getTime()}`;
+        }, 5000);
+    </script>
+</body>
+</html>
+
