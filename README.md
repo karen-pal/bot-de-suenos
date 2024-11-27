@@ -10,3 +10,4 @@ micromamba activate llms-310
 (llms-310) [kpalacio@localhost botu]$ jupyter notebook --ip 0.0.0.0 --no-browser --port 7866
 
 
+transformers==4.44.2
